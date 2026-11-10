@@ -10,9 +10,8 @@ class ShapeRegistry:
         self._prototypes[k] = p
         
     def create(self,k:str):
-        prototype: Shape = self._prototypes[k]
-        
-        if not prototype:
-            raise KeyError(f"Prototype with key '{k}' not found in registry.")
-        
-        return prototype.clone()
+        try:
+            prototype = self._prototypes[k]
+            return prototype.clone()
+        except KeyError:
+            raise KeyError(f"Shape '{k}' is not registered in the registry.")

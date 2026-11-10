@@ -12,6 +12,8 @@ big_blue_rectangle = registry.create("rectangle")
 big_yellow_circle = registry.create("circle")
 small_green_rectangle = registry.create("rectangle")
 
+registry.create("hexagon")  # This will raise a KeyError since "hexagon" is not registered
+
 small_red_circle.configure(x=10, y=20, color="red", radius=5)
 big_blue_rectangle.configure(x=30, y=40, color="blue", width=15, height=25)
 big_yellow_circle.configure(x=50, y=60, color="yellow", radius=10)
