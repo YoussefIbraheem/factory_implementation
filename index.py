@@ -3,25 +3,19 @@ from shapes import Circle, Rectangle
 
 registry = ShapeRegistry()
 
-registry.register("circle", Circle())
-registry.register("rectangle", Rectangle())
+registry.register("small_circle", Circle(radius=5))
+registry.register("big_rectangle", Rectangle(width=15, height=25))
 
+small_red_circle = registry.create("small_circle")
+small_red_circle.move(10, 20)
+small_red_circle.set_color("red")
 
-small_red_circle = registry.create("circle")
-big_blue_rectangle = registry.create("rectangle")
-big_yellow_circle = registry.create("circle")
-small_green_rectangle = registry.create("rectangle")
+big_blue_rectangle = registry.create("big_rectangle")
+big_blue_rectangle.move(30, 40)
+big_blue_rectangle.set_color("blue")
 
-registry.create("hexagon")  # This will raise a KeyError since "hexagon" is not registered
-
-small_red_circle.configure(x=10, y=20, color="red", radius=5)
-big_blue_rectangle.configure(x=30, y=40, color="blue", width=15, height=25)
-big_yellow_circle.configure(x=50, y=60, color="yellow", radius=10)
-small_green_rectangle.configure(x=70, y=80, color="green", width=20, height=30)
-
+print("Small Red Circle:")
 print(small_red_circle)
+
+print("Big Blue Rectangle:")
 print(big_blue_rectangle)
-print(big_yellow_circle)
-print(small_green_rectangle)
-print(small_red_circle)
-print(small_green_rectangle)

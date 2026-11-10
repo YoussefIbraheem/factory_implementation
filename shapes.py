@@ -3,37 +3,41 @@ from abc import ABC, abstractmethod
 
 
 class Shape(ABC):
-    def __init__(self):
-        self.x = 0
-        self.y = 0
-        self.color = "black"
+    def __init__(self, x=0, y=0, color="black"):
+        self.x = x
+        self.y = y
+        self.color = color
 
     @abstractmethod
     def __deepcopy__(self, memo=None):
-
-        new = self.__class__()
-        new.__dict__.update(self.__dict__)
-
+        
+        if memo is None:
+            memo = {}
+            
+        new = self.__class__.__new__(self.__class__)
+        memo[id(self)] = new
+        new.x = copy.deepcopy(self.x, memo)
+        new.y = copy.deepcopy(self.y, memo)
+        new.color = copy.deepcopy(self.color, memo)
+        
         return new
 
-    @abstractmethod
-    def configure(self, **kwargs):
-        self.x = kwargs.get("x", self.x)
-        self.y = kwargs.get("y", self.y)
-        self.color = kwargs.get("color", self.color)
+
+    def move(self, x, y):
+        self.x = x
+        self.y = y
+
+    def set_color(self, color):
+        self.color = color
 
     def clone(self):
         return copy.deepcopy(self)
 
 
 class Circle(Shape):
-    def __init__(self):
+    def __init__(self, radius=0):
         super().__init__()
-        self.radius = 0
-
-    def configure(self, **kwargs):
-        super().configure(**kwargs)
-        self.radius = kwargs.get("radius", self.radius)
+        self.radius = radius
 
     def __str__(self):
         return f"""
@@ -50,15 +54,10 @@ class Circle(Shape):
 
 
 class Rectangle(Shape):
-    def __init__(self):
+    def __init__(self, width=0, height=0):
         super().__init__()
-        self.width = 0
-        self.height = 0
-
-    def configure(self, **kwargs):
-        super().configure(**kwargs)
-        self.width = kwargs.get("width", self.width)
-        self.height = kwargs.get("height", self.height)
+        self.width = width
+        self.height = height
 
     def __str__(self):
         return f"""
